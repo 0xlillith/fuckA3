@@ -27,8 +27,8 @@ driver = webdriver.Chrome(desired_capabilities=caps,options=options)
 driver.get(sys.argv[1])
 
 # Define final export file name from site title
-nombreCapitulo = driver.title
-print("\n** Fetching " +nombreCapitulo)
+chapterName = driver.title
+print("\n** Fetching " +chapterName)
 
 # Click ACCEPT cookies button
 #element = driver.find_element(By.PARTIAL_LINK_TEXT, "ACEPTAR")
@@ -67,12 +67,12 @@ while True:
     break
 driver.quit()
 
-listaVideo = urlVideo.split(".ts")
-listaAudio = urlAudio.split(".ts")
-videoPre = listaVideo[0][:-1]
-videoPost = ".ts" + listaVideo[1]
-audioPre = listaAudio[0][:-1]
-audioPost = ".ts" + listaAudio[1]
+listVideo = urlVideo.split(".ts")
+listAudio = urlAudio.split(".ts")
+videoPre = listVideo[0][:-1]
+videoPost = ".ts" + listVideo[1]
+audioPre = listAudio[0][:-1]
+audioPost = ".ts" + listAudio[1]
 
 i = 1
 r = requests.get(videoPre +str(i) +videoPost)
@@ -88,11 +88,11 @@ print("\n** Joining video .TS and audio .TS to .mp4 file")
 (
   ffmpeg
   .input('video.ts')
-  .output(nombreCapitulo +".mp4", codec='copy')
+  .output(chapterName +".mp4", codec='copy')
   .global_args('-i', 'audio.ts')
   .run()
 )
 print("\n** Removing temporal .TS files")
 os.remove("video.ts")
 os.remove("audio.ts")
-print("\n** Done **")
+print("\n** Done <3 **")
