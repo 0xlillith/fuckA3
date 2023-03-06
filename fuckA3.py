@@ -68,6 +68,7 @@ while True:
     break
 driver.quit()
 
+#  URL spliting
 listVideo = urlVideo.split(".ts")
 listAudio = urlAudio.split(".ts")
 videoPre = listVideo[0][:-1]
@@ -75,6 +76,7 @@ videoPost = ".ts" + listVideo[1]
 audioPre = listAudio[0][:-1]
 audioPost = ".ts" + listAudio[1]
 
+# Download using Requests
 i = 1
 r = requests.get(videoPre +str(i) +videoPost)
 while r.status_code != 404:
