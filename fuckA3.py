@@ -8,6 +8,7 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 import json
+import re
 
 print("\n** Loading site to extract URL to media files...")
 
@@ -27,7 +28,7 @@ driver = webdriver.Chrome(desired_capabilities=caps,options=options)
 driver.get(sys.argv[1])
 
 # Define final export file name from site title
-chapterName = driver.title
+chapterName = re.sub(r'[!@#$:/="]', '', driver.title) # RE to remove symbols from title
 print("\n** Fetching " +chapterName)
 
 # Click ACCEPT cookies button
@@ -84,13 +85,13 @@ while r.status_code != 404:
   print("** Downloading audio #" +str(i) +" and video #" +str(i), end='\r')
   i = i + 1
 
-print("\n** Joining video .TS and audio .TS to .mp4 file")
+print("\n\n** Joining video .TS and audio .TS to .mp4 file")
 (
   ffmpeg
   .input('video.ts')
   .output(chapterName +".mp4", codec='copy')
   .global_args('-i', 'audio.ts')
-  .run()
+  .run(quiet=True)
 )
 print("\n** Removing temporal .TS files")
 os.remove("video.ts")
