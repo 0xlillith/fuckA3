@@ -5,6 +5,7 @@ import ffmpeg
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 import json
@@ -14,15 +15,11 @@ print("\n** Loading site to extract URL to media files...")
 
 options = webdriver.ChromeOptions()
 
-caps = DesiredCapabilities.CHROME
-caps['goog:loggingPrefs'] = {'performance': 'ALL'}
-caps["pageLoadStrategy"] = "eager"  #  interactive
-
-# Use a chrome profile alreaady loged-in at the site, required for some content
-options.add_argument("--window-size=1920,1080")
+options = Options()
+options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
+# options.set_capability('pageLoadStrategy', {'eager'})
 options.add_argument("user-data-dir=C:\\Users\\lillith\\AppData\\Local\\Google\\Chrome\\User Data\\")
-
-driver = webdriver.Chrome(desired_capabilities=caps,options=options)
+driver = webdriver.Chrome(options=options)
 
 # Import URL from command line argument
 driver.get(sys.argv[1])
@@ -36,10 +33,10 @@ print("\n** Fetching " +chapterName)
 #element.click()
 
 # Wait only until PLAY button is visible
-WebDriverWait(driver, timeout=10).until(ec.visibility_of_element_located((By.CLASS_NAME, "hTizmk")))
+WebDriverWait(driver, timeout=10).until(ec.visibility_of_element_located((By.CLASS_NAME, "iUTaSS")))
 
 # Click PLAY Button.
-element = driver.find_element(By.CLASS_NAME, "hTizmk")
+element = driver.find_element(By.CLASS_NAME, "iUTaSS")
 element.click()
 
 def process_browser_log_entry(entry):
