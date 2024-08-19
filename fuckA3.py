@@ -1,7 +1,7 @@
 import os
 import sys
 import requests
-import ffmpeg
+import ffmpeg # Requires only pip install ffmpeg-python, but not ffmpeg
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
